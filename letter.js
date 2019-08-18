@@ -24,7 +24,7 @@ depending on whether or not the user has guessed the letter. That means the cons
   character, updating the stored boolean value to true if it was guessed correctly
 */
   this.Checker = function (guess) {
-    if (guess === this.char) {
+    if (guess.toLowerCase() === this.char.toLowerCase()) {
       this.guessed = true;
     } else {
       return false;
