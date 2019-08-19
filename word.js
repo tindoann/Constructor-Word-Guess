@@ -12,15 +12,33 @@ const Letter = require('./letter.js');
 // * A function that returns a string representing the word. This should call the function on each letter object (the first function defined in `Letter.js`) that displays the character or an underscore and concatenate those together.
 
 // Constructor for Word
-let Word = function(str) {
-  // 1. Method to changes selected word into an array of Letter objects  
-  this.
 
-  // 2. Method to display Word
-}; 
-//  * A function that takes a character as an argument and calls the guess function on each letter object (the second function defined in `Letter.js`)
+// 1. Method to changes selected word into an array of Letter objects  
+let Word = function(word) {
+    this.word = word; 
+    this.wordArr = []; 
 
-//  3. Method to check if input matches a letter of the word
+    for (var i = 0; i < word.length; i++) {
+      let letter = new Letter(word[i]); 
+      this.word.push(letter); 
+    }
 
+    // 2. Method to display Word in terminal 
+
+  this.Show = function() {
+      let wordShow = []; 
+      for (var i = 0; i < wordArr.length; i++) {
+        wordShow.push(this.wordArr.display()); 
+      }
+    }
+  //  * A function that takes a character as an argument and calls the guess function on each letter object (the second function defined in `Letter.js`)
+
+  //  3. Method to check if input matches a letter of the word
+  this.Match = function(guess) {
+    for (var i = 0; i < this.wordArr.length; i++) {
+      this.wordArr[i].check(guess);
+    }
+  }
+}
 // Exporting the Word constructor to use in index.js
 module.exports = Word; 
