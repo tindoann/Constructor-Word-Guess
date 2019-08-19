@@ -13,7 +13,7 @@ depending on whether or not the user has guessed the letter. That means the cons
   this.guessed = false; 
 
   // Method to displays the character or underscore
-  this.display = function() {
+  this.Display = function() {
    if (this.guessed){
      return this.char.toLowerCase(); 
    } 
