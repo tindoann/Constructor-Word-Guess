@@ -4,6 +4,8 @@ display an underlying character or a blank placeholder (such as an underscore),
 depending on whether or not the user has guessed the letter. That means the constructor
  should define: */
 
+let wordChecker = /^[a-z]$/
+
  // Constructor for letters
  let Letter = function(char) {
 // * A string value to store the underlying character for the letter
@@ -13,24 +15,22 @@ depending on whether or not the user has guessed the letter. That means the cons
   this.guessed = false; 
 
   // Method to displays the character or underscore
-  this.Display = function() {
-   if (this.guessed){
+  this.display = function() {
+   if (this.guessed || !(wordCheck.test(this.char))) {
      return this.char.toLowerCase(); 
    } 
    else {
-     return '_'
+     return '_'; 
    }
  }; 
 
 // Method to check if the input is the same this character 
   this.Checker = function (guess) {
-    if (guess.toLowerCase() === this.char.toLowerCase()) {
-      this.guessed = true;
-    } else {
-      return false;
+    if (guess === this.char) {
+      this.gussed = true; 
     }
-  }; 
-}; 
+  }
+ }
 
 // Exporting the Letter constructor to use in word.js
-module.exports = Letter; 
+module.exports = Letter;
