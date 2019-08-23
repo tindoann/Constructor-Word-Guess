@@ -14,20 +14,22 @@ const Letter = require('./letter.js');
 // Constructor for Word
 
 // 1. Method to changes selected word into an array of Letter objects  
-let word = function(word) {
+let Word = function(word) {
     this.word = word; 
     this.wordArr = []; 
-
-    for (var i = 0; i < word.length; i++) {
-      let letter = new Letter(word[i]); 
-      this.word.push(letter); 
+    this.createWord = function() {
+      for (var i = 0; i < word.length; i++) {
+        let letter = new Letter(word[i]); 
+        this.word.push(letter); 
+      }
     }
+  
 
     // 2. Method that utilizes the display() method in each Letter object in the Word object and returns
     //what the user will see in the game based on which letters are guessed correctly in the hidden word.
   this.show = function() {
       let wordShow = []; 
-      for (var i = 0; i < wordArr.length; i++) {
+      for (var i = 0; i < this.wordArr.length; i++) {
         wordShow.push(this.wordArr.display()); 
       }
     }
@@ -36,7 +38,7 @@ let word = function(word) {
   //  3. Method to check if input matches a letter of the word
   this.match = function(guess) {
     for (var i = 0; i < this.wordArr.length; i++) {
-      this.wordArr[i].check(guess);
+      this.wordArr[i].checker(guess);
     }
   }
 }

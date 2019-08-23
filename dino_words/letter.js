@@ -25,7 +25,7 @@ let wordChecker = /^[a-z]$/
  }; 
 
 // Method to check if the input is the same this character 
-  this.Checker = function (guess) {
+  this.checker = function (guess) {
     if (guess === this.char) {
       this.gussed = true; 
     }

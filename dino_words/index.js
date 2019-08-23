@@ -1,70 +1,110 @@
 // *index.js**: The file containing the logic for the course of the game, which depends on `Word.js`
 
-const word = require('./word.js');
+const Word = require('./Word.js');
 const inquirer = require('inquirer');
 
 // Randomly selects a word and uses the `Word` constructor to store it
 
-let counter;
-let wins = 0;
 let losses = 0;
 let guessesLeft;
-let correctGuess = [];
-let incorectGuess = [];
 const dinoArray = ['archaeopteryx', 'brachiosaurus', 'deinonychus', 'minmi', 'parasaurolophus', 'triceratops', 'triceratops', 'Velociraptor'];
-const letters = /[a-zA-Z]/;
+const checker = /[a-zA-Z]/;
 
 //Intro to game 
 
 console.log(`DINO WORLD GAME`);
 
 // Function to start a new game that creates a new word
-function reset() {
+function play() {
   let randPicker = dinoArray[Math.floor(Math.random() * dinoArray.length)];
-  let selectedWord = randPicker[selectedWord]; // random word selected
-  newWord = new Word(randPicker); // pick a new word randomly from the word array
+  //let selectedWord = randPicker[selectedWord]; // random word selected
+  let newWord = new Word(randPicker); // pick a new word randomly from the word array
   guessesLeft = 8;
   console.log('You have 8 guesses to figure out the dinosaur')
-  guessWord(word, newWord)
 
 
   //Displays the random word in underscore
-  newWord.display();
+  newWord.show();
 
   // Function will call itself until either the word is guessed or the user runs out of attemps
   function prompt() {
-
     inquirer.prompt([{
       type: 'input',
       message: 'Please select a letter',
-      name: input
+      name: 'input'
     }]).then(function (response) {
       let letter = response.input.toLowerCase()
       //checks if the letter is in the word, then return to true or false
-      if (check.test(char)) {
-        newWord.match(char);
-        // set boolean for letters in the word
-        let setWord = false;
+      if (checker.test(letter)) {
+        // Program runs if there are guesses left
+        if (guessesLeft >= 1) {
+          newWord.match(letter);
+          // set boolean for letters in the word
+          let setWord = false;
 
-        for (var i = 0; i < newWord.wordArr.length; i++) {
-          if (letter === newWord.wordArr[i].char) {
-            setWord = true;
+          for (var i = 0; i < newWord.wordArr.length; i++) {
+            if (letter === newWord.wordArr[i].char) {
+              setWord = true;
+            }
+          }
+
+          if (setWord) {
+            console('\nCorrect!');
+          } else {
+            guessesLeft--;
+            console.log(`You have ${guessesLeft} guesses left.`);
+          }
+
+        // Boolean that determine whether or not all the letter have been gussed
+        let letterChecker = false;
+        // Checks if any letters have yet to be guessed
+        for (let j = 0; j < newWord.wordArr.length; j++) {
+          if (newWord.wordArr[j].guessed === false) {
+            letterChecker = true;
           }
         }
 
-        if (setWord) {
-          console('\nCorrect!');
+        // If all letters have been guessed
+        if (letterChecker === false) {
+          newWord.show();
+          console.log('You won!');
+          playAgain();
         } else {
-          guessesLeft--;
-          console.log(`You have ${guessesLeft} guesses remaining.`);
-        };
-
+          newWord.show();
+          // If there are no guesses left, prompt user to play again or exit
+          if (guessesLeft === 0) {
+            console.log('You ran out of guesses');
+            playAgain();
+          } else {
+            // If there are gusses left, prompt user to continue
+            prompt();
+          }
+        }
+      } else {
+        process.exit();
       }
-    })
-  }
-
-
-
-
-
-  // Prompts the user for each guess and keeps track of the user's remaining guesses
+    } else {
+      console.log('Not a valid character'); 
+      prompt(); 
+    }
+  }); 
+}
+// Prompts user for the
+prompt(); 
+}
+  function playAgain() {
+    inquirer.prompt([{
+      type: 'list',
+      message: 'Would you like to play again',
+      choices: ['Play Again', 'Exit'],
+      name: 'again'
+    }]).then(function (respond) {
+      if (response.again === 'Play Again') {
+        console.log(`Awesome, here's your next word.`)
+        play();
+      } else {
+        console.log('See you again, space cowboy!'); 
+    }
+  }); 
+}
+play(); 
